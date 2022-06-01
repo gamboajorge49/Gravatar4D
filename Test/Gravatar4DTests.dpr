@@ -15,7 +15,9 @@ program Gravatar4DTests;
 {$ENDIF}
 
 uses
-  DUnitTestRunner;
+  DUnitTestRunner,
+  TestGravatar4D in 'TestGravatar4D.pas',
+  Gravatar4D in '..\src\Gravatar4D.pas';
 
 {$R *.RES}
 
