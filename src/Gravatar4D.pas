@@ -6,8 +6,11 @@ uses
   System.SysUtils,
   System.Classes,
   System.TypInfo,
-  Winapi.Windows,
+  Vcl.Graphics,
   IdUri,
+  IdHttp,
+  IdSSLOpenSSL,
+  pngimage,
   IdHashMessageDigest;
 
 type
@@ -22,28 +25,24 @@ type
     FEmail: string;
     FGravatarRating: TGravatarRating;
     FSize: Smallint;
-    function EmailToMD5(const Value: string): string;
+
+    function DownloadImage(const Url: string): TPngImage;
 
   public
     constructor Create;
 
-    function GravatarImage(): TBitmap; overload;
-
     function GravatarImage(const Email: string; const Size: Smallint; const GravatarRating: TGravatarRating = grG;
       const GravatarDeafult: TGravatarDeafult = gdNone): TBitmap; overload;
+
+    function EmailToMD5(const Value: string): string;
 
     function GenerateUrl(const Email: string; const Size: Smallint = 0; const GravatarRating: TGravatarRating = grG;
       const GravatarDeafult: TGravatarDeafult = gdNone; const URLDefaultImage: string = ''): string;
 
-  published
-    property Email: string read FEmail write FEmail;
-    property GravatarRating: TGravatarRating read FGravatarRating write FGravatarRating;
-    property Size: Smallint read FSize write FSize;
-
   end;
 
 const
-  URL_BASE: string = 'https://www.gravatar.com/avatar/';
+  URL_BASE: string = 'http://www.gravatar.com/avatar/';
 
 implementation
 
@@ -52,6 +51,27 @@ implementation
 constructor TGravatar4D.Create;
 begin
   FGravatarRating := grG;
+end;
+
+function TGravatar4D.DownloadImage(const Url: string): TPngImage;
+var
+  Http: TIdHttp;
+  MS: TMemoryStream;
+begin
+  MS := TMemoryStream.Create;
+  Result := TPngImage.Create;
+  Http := TIdHttp.Create(nil);
+  try
+
+    Http.Get(Url, MS);
+    MS.Position := 0;
+
+    Result.LoadFromStream(MS);
+
+  finally
+    FreeAndNil(Http);
+    FreeAndNil(MS);
+  end;
 end;
 
 function TGravatar4D.EmailToMD5(const Value: string): string;
@@ -113,12 +133,7 @@ end;
 function TGravatar4D.GravatarImage(const Email: string; const Size: Smallint; const GravatarRating: TGravatarRating;
   const GravatarDeafult: TGravatarDeafult): TBitmap;
 begin
-
-end;
-
-function TGravatar4D.GravatarImage: TBitmap;
-begin
-  Result := GravatarImage(FEmail, FSize, FGravatarRating);
+  // Result := DownloadImage(GenerateUrl(Email, Size, GravatarRating, GravatarDeafult));
 end;
 
 end.
