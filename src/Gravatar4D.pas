@@ -32,14 +32,17 @@ type
   public
     constructor Create;
 
-    function GravatarImage(const Email: string; const Size: Smallint; const GravatarRating: TGravatarRating = grG;
-      const GravatarDeafult: TGravatarDeafult = gdNone): TPicture; overload;
-
     function EmailToMD5(const Value: string): string;
 
     function GenerateUrl(const Email: string; const Size: Smallint = 0; const GravatarRating: TGravatarRating = grG;
       const GravatarDeafult: TGravatarDeafult = gdNone; const URLDefaultImage: string = ''): string;
 
+    function GravatarImage(const Email: string): TPicture; overload;
+
+    function GravatarImage(const Email: string; const Size: Smallint): TPicture; overload;
+
+    function GravatarImage(const Email: string; const Size: Smallint; const GravatarRating: TGravatarRating = grG;
+      const GravatarDeafult: TGravatarDeafult = gdNone; const URLDefaultImage: string = ''): TPicture; overload;
   end;
 
 const
@@ -97,9 +100,8 @@ begin
   end;
 end;
 
-function TGravatar4D.GenerateUrl(const Email: string; const Size: Smallint = 0;
-  const GravatarRating: TGravatarRating = grG; const GravatarDeafult: TGravatarDeafult = gdNone;
-  const URLDefaultImage: string = ''): string;
+function TGravatar4D.GenerateUrl(const Email: string; const Size: Smallint; const GravatarRating: TGravatarRating;
+  const GravatarDeafult: TGravatarDeafult; const URLDefaultImage: string): string;
 var
   sb: TStringBuilder;
   d: string;
@@ -142,10 +144,20 @@ begin
 
 end;
 
-function TGravatar4D.GravatarImage(const Email: string; const Size: Smallint;
-  const GravatarRating: TGravatarRating = grG; const GravatarDeafult: TGravatarDeafult = gdNone): TPicture;
+function TGravatar4D.GravatarImage(const Email: string; const Size: Smallint): TPicture;
 begin
-  Result := DownloadImage(GenerateUrl(Email, Size, GravatarRating, GravatarDeafult));
+  Result := GravatarImage(Email, Size, grG);
+end;
+
+function TGravatar4D.GravatarImage(const Email: string): TPicture;
+begin
+  Result := GravatarImage(Email, 80, grG);
+end;
+
+function TGravatar4D.GravatarImage(const Email: string; const Size: Smallint; const GravatarRating: TGravatarRating;
+  const GravatarDeafult: TGravatarDeafult; const URLDefaultImage: string): TPicture;
+begin
+  Result := DownloadImage(GenerateUrl(Email, Size, GravatarRating, GravatarDeafult, URLDefaultImage));
 end;
 
 end.
