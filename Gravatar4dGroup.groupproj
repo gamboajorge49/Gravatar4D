@@ -3,10 +3,10 @@
         <ProjectGuid>{C5CD9506-05A1-48F4-9ACA-5DDADAA9893C}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
-        <Projects Include="src\Gravatar4D.dproj">
+        <Projects Include="src\Gravatar4Delphi.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="Test\Gravatar4DTests.dproj">
+        <Projects Include="Test\Gravatar4DelphiTests.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -17,32 +17,32 @@
             <Default.Personality/>
         </BorlandProject>
     </ProjectExtensions>
-    <Target Name="Gravatar4D">
-        <MSBuild Projects="src\Gravatar4D.dproj"/>
+    <Target Name="Gravatar4Delphi">
+        <MSBuild Projects="src\Gravatar4Delphi.dproj"/>
     </Target>
-    <Target Name="Gravatar4D:Clean">
-        <MSBuild Projects="src\Gravatar4D.dproj" Targets="Clean"/>
+    <Target Name="Gravatar4Delphi:Clean">
+        <MSBuild Projects="src\Gravatar4Delphi.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="Gravatar4D:Make">
-        <MSBuild Projects="src\Gravatar4D.dproj" Targets="Make"/>
+    <Target Name="Gravatar4Delphi:Make">
+        <MSBuild Projects="src\Gravatar4Delphi.dproj" Targets="Make"/>
     </Target>
-    <Target Name="Gravatar4DTests">
-        <MSBuild Projects="Test\Gravatar4DTests.dproj"/>
+    <Target Name="Gravatar4DelphiTests">
+        <MSBuild Projects="Test\Gravatar4DelphiTests.dproj"/>
     </Target>
-    <Target Name="Gravatar4DTests:Clean">
-        <MSBuild Projects="Test\Gravatar4DTests.dproj" Targets="Clean"/>
+    <Target Name="Gravatar4DelphiTests:Clean">
+        <MSBuild Projects="Test\Gravatar4DelphiTests.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="Gravatar4DTests:Make">
-        <MSBuild Projects="Test\Gravatar4DTests.dproj" Targets="Make"/>
+    <Target Name="Gravatar4DelphiTests:Make">
+        <MSBuild Projects="Test\Gravatar4DelphiTests.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="Gravatar4D;Gravatar4DTests"/>
+        <CallTarget Targets="Gravatar4Delphi;Gravatar4DelphiTests"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="Gravatar4D:Clean;Gravatar4DTests:Clean"/>
+        <CallTarget Targets="Gravatar4Delphi:Clean;Gravatar4DelphiTests:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="Gravatar4D:Make;Gravatar4DTests:Make"/>
+        <CallTarget Targets="Gravatar4Delphi:Make;Gravatar4DelphiTests:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

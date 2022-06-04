@@ -1,4 +1,4 @@
-package Gravatar4D;
+package Gravatar4Delphi;
 
 {$R *.res}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}

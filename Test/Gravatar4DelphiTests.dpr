@@ -1,4 +1,4 @@
-program Gravatar4DTests;
+program Gravatar4DelphiTests;
 {
 
   Delphi DUnit Test Project
