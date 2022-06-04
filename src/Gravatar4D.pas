@@ -26,7 +26,7 @@ type
     FGravatarRating: TGravatarRating;
     FSize: Smallint;
 
-    function DownloadImage(const Url: string): TPngImage;
+    function DownloadImage(const Url: string): TBitmap;
 
   public
     constructor Create;
@@ -53,24 +53,29 @@ begin
   FGravatarRating := grG;
 end;
 
-function TGravatar4D.DownloadImage(const Url: string): TPngImage;
+function TGravatar4D.DownloadImage(const Url: string): TBitmap;
 var
   Http: TIdHttp;
   MS: TMemoryStream;
+  png: TPngImage;
 begin
   MS := TMemoryStream.Create;
-  Result := TPngImage.Create;
+  png := TPngImage.Create;
   Http := TIdHttp.Create(nil);
+  Result := TBitmap.Create;
+
   try
 
     Http.Get(Url, MS);
     MS.Position := 0;
 
-    Result.LoadFromStream(MS);
+    png.LoadFromStream(MS);
 
+    Result.Assign(png);
   finally
     FreeAndNil(Http);
     FreeAndNil(MS);
+    FreeAndNil(png);
   end;
 end;
 
@@ -133,7 +138,7 @@ end;
 function TGravatar4D.GravatarImage(const Email: string; const Size: Smallint; const GravatarRating: TGravatarRating;
   const GravatarDeafult: TGravatarDeafult): TBitmap;
 begin
-  // Result := DownloadImage(GenerateUrl(Email, Size, GravatarRating, GravatarDeafult));
+  Result := DownloadImage(GenerateUrl(Email, Size, GravatarRating, GravatarDeafult));
 end;
 
 end.
