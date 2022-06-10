@@ -24,8 +24,10 @@ type
   public
     procedure SetUp; override;
     procedure TearDown; override;
+    procedure _InternalTestEmailNotInformed;
   published
     procedure TestEmailToMD5;
+    procedure TestEmailNotInformed;
     procedure TestGenerateUrl;
     procedure TestGenerateUrl_DefaultImage;
     procedure TestGenerateUrl_FullParams;
@@ -42,6 +44,11 @@ procedure TestTGravatar4D.TearDown;
 begin
   FGravatar4D.Free;
   FGravatar4D := nil;
+end;
+
+procedure TestTGravatar4D.TestEmailNotInformed;
+begin
+  CheckException(Self._InternalTestEmailNotInformed, EGravatar4dException, 'The email was not provided.');
 end;
 
 procedure TestTGravatar4D.TestEmailToMD5;
@@ -105,6 +112,11 @@ begin
   CheckEquals('http://www.gravatar.com/avatar/1496f7f4fd086e2d0a0460220331e9ec?r=pg&s=200&d=wavatar', ReturnValue,
     'Generate Url from full parameters')
 
+end;
+
+procedure TestTGravatar4D._InternalTestEmailNotInformed;
+begin
+  FGravatar4D.GravatarImage('')
 end;
 
 initialization
