@@ -7,18 +7,21 @@ uses
   System.Classes,
   System.TypInfo,
   Vcl.Graphics,
+  Vcl.Dialogs,
+  Vcl.Imaging.pngimage,
   IdUri,
   IdHttp,
   IdSSLOpenSSL,
-  Vcl.Dialogs,
-  Vcl.Imaging.pngimage,
-  IdHashMessageDigest, IdComponent;
+  IdHashMessageDigest,
+  IdComponent;
 
 type
 
   TGravatarRating = (grG, grPG, grR, grX);
   TGravatarDeafult = (gdNone, gdUrlImage, gd404, gdmp, gdidenticon, gdmonsterid, gdwavatar, gdretro,
     gdrobohash, gdblank);
+
+  EGravatar4dException = class(Exception);
 
   TGravatar4D = class
 
@@ -63,6 +66,7 @@ var
   MS: TMemoryStream;
   png: TPngImage;
 begin
+
   MS := TMemoryStream.Create;
 
   Http := TIdHttp.Create(nil);
@@ -157,6 +161,10 @@ end;
 function TGravatar4D.GravatarImage(const Email: string; const Size: Smallint; const GravatarRating: TGravatarRating;
   const GravatarDeafult: TGravatarDeafult; const URLDefaultImage: string): TPicture;
 begin
+
+  if Trim(Email) = '' then
+    raise EGravatar4dException.Create('The email was not provided.');
+
   Result := DownloadImage(GenerateUrl(Email, Size, GravatarRating, GravatarDeafult, URLDefaultImage));
 end;
 

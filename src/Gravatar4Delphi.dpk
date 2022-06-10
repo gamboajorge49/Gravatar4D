@@ -28,7 +28,12 @@ package Gravatar4Delphi;
 {$IMPLICITBUILD ON}
 
 requires
-  rtl;
+  rtl,
+  vclimg,
+  vcl,
+  IndySystem,
+  IndyProtocols,
+  IndyCore;
 
 contains
   Gravatar4D in 'Gravatar4D.pas';
