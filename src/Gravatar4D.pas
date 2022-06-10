@@ -23,7 +23,7 @@ type
 
   EGravatar4dException = class(Exception);
 
-  TGravatar4D = class
+  TGravatar4D = class(TComponent)
 
   private
     FEmail: string;
@@ -48,10 +48,17 @@ type
       const GravatarDeafult: TGravatarDeafult = gdNone; const URLDefaultImage: string = ''): TPicture; overload;
   end;
 
+procedure Register;
+
 const
   URL_BASE: string = 'http://www.gravatar.com/avatar/';
 
 implementation
+
+procedure Register;
+begin
+  RegisterComponents('Gravatar4D', [TGravatar4D]);
+end;
 
 { TGravatar4D }
 
