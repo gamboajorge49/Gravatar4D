@@ -66,11 +66,15 @@ end;
 procedure TForm1.CheckBox1Click(Sender: TObject);
 begin
   Image1.Center := CheckBox1.Checked;
+  Image1.Update;
+  Application.ProcessMessages;
 end;
 
 procedure TForm1.chStretchClick(Sender: TObject);
 begin
   Image1.Stretch := chStretch.Checked;
+  Image1.Update;
+  Application.ProcessMessages;
 end;
 
 procedure TForm1.FormShow(Sender: TObject);

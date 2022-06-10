@@ -10,6 +10,7 @@ object Form1: TForm1
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poOwnerFormCenter
   OnShow = FormShow
   TextHeight = 15
   object pnlMain: TPanel
@@ -22,10 +23,6 @@ object Form1: TForm1
     Caption = 'pnlMain'
     ShowCaption = False
     TabOrder = 0
-    ExplicitLeft = 288
-    ExplicitTop = 208
-    ExplicitWidth = 185
-    ExplicitHeight = 41
     object Image1: TImage
       AlignWithMargins = True
       Left = 295
