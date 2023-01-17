@@ -10,10 +10,9 @@ uses
   Vcl.Dialogs,
   Vcl.Imaging.pngimage,
   IdUri,
-  IdHttp,
-  IdSSLOpenSSL,
   IdHashMessageDigest,
-  IdComponent;
+  REST.Types, REST.Client, Data.Bind.Components,
+  Data.Bind.ObjectScope;
 
 type
 
@@ -32,6 +31,7 @@ type
 
     function DownloadImage(const Url: string): TPicture;
 
+    function IsSSL: Boolean;
   public
     constructor Create;
 
@@ -51,7 +51,7 @@ type
 procedure Register;
 
 const
-  URL_BASE: string = 'http://www.gravatar.com/avatar/';
+  URL_BASE: string = 'https://www.gravatar.com/avatar/';
 
 implementation
 
@@ -69,19 +69,31 @@ end;
 
 function TGravatar4D.DownloadImage(const Url: string): TPicture;
 var
-  Http: TIdHttp;
+  RESTClient: TRESTClient;
+  RESTRequest: TRESTRequest;
+  RESTResponse: TRESTResponse;
   MS: TMemoryStream;
   png: TPngImage;
 begin
 
-  MS := TMemoryStream.Create;
+  RESTClient := TRESTClient.Create(Self);
+  RESTRequest := TRESTRequest.Create(Self);
+  RESTResponse := TRESTResponse.Create(Self);
 
-  Http := TIdHttp.Create(nil);
+  RESTRequest.Client := RESTClient;
+  RESTRequest.Response := RESTResponse;
+
   png := TPngImage.Create;
   Result := TPicture.Create;
 
   try
-    Http.Get(Url, MS);
+
+    RESTClient.BaseURL := Url;
+    RESTRequest.Execute;
+
+    MS := TMemoryStream.Create;
+    MS.WriteData(RESTResponse.RawBytes, Length(RESTResponse.RawBytes));
+    MS.Position := 0;
 
     if MS.Size > 0 then
     begin
@@ -92,7 +104,10 @@ begin
     end;
 
   finally
-    FreeAndNil(Http);
+    FreeAndNil(RESTClient);
+    FreeAndNil(RESTRequest);
+    FreeAndNil(RESTResponse);
+
     FreeAndNil(MS);
     FreeAndNil(png);
 
@@ -173,6 +188,12 @@ begin
     raise EGravatar4dException.Create('The email was not provided.');
 
   Result := DownloadImage(GenerateUrl(Email, Size, GravatarRating, GravatarDeafult, URLDefaultImage));
+
+end;
+
+function TGravatar4D.IsSSL: Boolean;
+begin
+  Result := True;
 end;
 
 end.
