@@ -70,7 +70,7 @@ var
 begin
   Email := 'user@github.com';
   ReturnValue := FGravatar4D.GenerateUrl(Email);
-  CheckEquals('http://www.gravatar.com/avatar/1496f7f4fd086e2d0a0460220331e9ec?r=g', ReturnValue,
+  CheckEquals('https://www.gravatar.com/avatar/1496f7f4fd086e2d0a0460220331e9ec?r=g', ReturnValue,
     'Generate Url from basic parameters');
 end;
 
@@ -89,7 +89,7 @@ begin
 
   ReturnValue := FGravatar4D.GenerateUrl(Email, Size, grG, GravatarDeafult, URLDefaultImage);
   CheckEquals
-    ('http://www.gravatar.com/avatar/1496f7f4fd086e2d0a0460220331e9ec?r=g&s=400&d=https://learndelphi.org/wp-content/uploads/2020/06/delphi2.png',
+    ('https://www.gravatar.com/avatar/1496f7f4fd086e2d0a0460220331e9ec?r=g&s=400&d=https://learndelphi.org/wp-content/uploads/2020/06/delphi2.png',
     ReturnValue, 'Generate Url from default image parameter');
 
 end;
@@ -109,7 +109,7 @@ begin
 
   ReturnValue := FGravatar4D.GenerateUrl(Email, Size, GravatarRating, GravatarDeafult);
 
-  CheckEquals('http://www.gravatar.com/avatar/1496f7f4fd086e2d0a0460220331e9ec?r=pg&s=200&d=wavatar', ReturnValue,
+  CheckEquals('https://www.gravatar.com/avatar/1496f7f4fd086e2d0a0460220331e9ec?r=pg&s=200&d=wavatar', ReturnValue,
     'Generate Url from full parameters')
 
 end;
