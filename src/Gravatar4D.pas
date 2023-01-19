@@ -31,7 +31,6 @@ type
 
     function DownloadImage(const Url: string): TPicture;
 
-    function IsSSL: Boolean;
   public
     constructor Create;
 
@@ -189,11 +188,6 @@ begin
 
   Result := DownloadImage(GenerateUrl(Email, Size, GravatarRating, GravatarDeafult, URLDefaultImage));
 
-end;
-
-function TGravatar4D.IsSSL: Boolean;
-begin
-  Result := True;
 end;
 
 end.
