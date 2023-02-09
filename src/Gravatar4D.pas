@@ -25,10 +25,7 @@ type
   TGravatar4D = class(TComponent)
 
   private
-    FEmail: string;
     FGravatarRating: TGravatarRating;
-    FSize: Smallint;
-
     function DownloadImage(const Url: string): TPicture;
 
   public
