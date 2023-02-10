@@ -48,12 +48,24 @@ var
 begin
   G := TGravatar4D.Create;
   try
-    image := G.GravatarImage(lbEmail.Text, SpinEdit1.Value, TGravatarRating(cbRating.ItemIndex),
-      TGravatarDeafult(cbDefault.ItemIndex), leDefault.Text);
-    Image1.Picture.Assign(image);
+    try
+      image := G.GravatarImage(lbEmail.Text, SpinEdit1.Value, TGravatarRating(cbRating.ItemIndex),
+        TGravatarDeafult(cbDefault.ItemIndex), leDefault.Text);
+
+      if Assigned(image) then
+        Image1.Picture.Assign(image);
+    except
+      on E: EGravatar4dException do
+      begin
+        ShowMessage('Unable to locate the Gravatar for the email.' + sLineBreak + 'Original message:' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage(E.Message);
+      end;
+    end;
 
   finally
-    FreeAndNil(image);
     FreeAndNil(G);
   end;
 end;

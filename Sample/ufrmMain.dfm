@@ -10,8 +10,10 @@ object Form1: TForm1
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OldCreateOrder = True
   Position = poOwnerFormCenter
   OnShow = FormShow
+  PixelsPerInch = 96
   TextHeight = 15
   object pnlMain: TPanel
     Left = 0
@@ -73,7 +75,6 @@ object Form1: TForm1
         EditLabel.Height = 15
         EditLabel.Caption = 'Email'
         TabOrder = 0
-        Text = ''
       end
       object btnGererate: TButton
         Left = 104
@@ -141,7 +142,6 @@ object Form1: TForm1
         EditLabel.Caption = 'Url Default'
         Enabled = False
         TabOrder = 7
-        Text = ''
       end
     end
   end

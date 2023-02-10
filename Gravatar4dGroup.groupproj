@@ -9,6 +9,9 @@
         <Projects Include="Test\Gravatar4DelphiTests.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="Sample\Gravatar4DelphiSample.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -35,14 +38,23 @@
     <Target Name="Gravatar4DelphiTests:Make">
         <MSBuild Projects="Test\Gravatar4DelphiTests.dproj" Targets="Make"/>
     </Target>
+    <Target Name="Gravatar4DelphiSample">
+        <MSBuild Projects="Sample\Gravatar4DelphiSample.dproj"/>
+    </Target>
+    <Target Name="Gravatar4DelphiSample:Clean">
+        <MSBuild Projects="Sample\Gravatar4DelphiSample.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Gravatar4DelphiSample:Make">
+        <MSBuild Projects="Sample\Gravatar4DelphiSample.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="Gravatar4Delphi;Gravatar4DelphiTests"/>
+        <CallTarget Targets="Gravatar4Delphi;Gravatar4DelphiTests;Gravatar4DelphiSample"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="Gravatar4Delphi:Clean;Gravatar4DelphiTests:Clean"/>
+        <CallTarget Targets="Gravatar4Delphi:Clean;Gravatar4DelphiTests:Clean;Gravatar4DelphiSample:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="Gravatar4Delphi:Make;Gravatar4DelphiTests:Make"/>
+        <CallTarget Targets="Gravatar4Delphi:Make;Gravatar4DelphiTests:Make;Gravatar4DelphiSample:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
