@@ -6,6 +6,7 @@ uses
   System.SysUtils,
   System.Classes,
   System.TypInfo,
+  System.RegularExpressions,
   Vcl.Graphics,
   Vcl.Dialogs,
   Vcl.Imaging.pngimage,
@@ -20,14 +21,20 @@ type
   TGravatarDeafult = (gdNone, gdUrlImage, gd404, gdmp, gdidenticon, gdmonsterid, gdwavatar, gdretro,
     gdrobohash, gdblank);
 
-  EGravatar4dException = class(Exception);
+  EGravatar4dException = class(Exception)
+  private
+    FEmail: string;
+  public
+    property Email: string read FEmail;
+    constructor Create(const Msg: string; const AEmail: string);
+  end;
 
   TGravatar4D = class(TComponent)
 
   private
     FGravatarRating: TGravatarRating;
     function DownloadImage(const Url: string): TPicture;
-
+    function EmailIsValid(const AEmail: string): Boolean;
   public
     constructor Create;
 
@@ -110,6 +117,18 @@ begin
   end;
 end;
 
+function TGravatar4D.EmailIsValid(const AEmail: string): Boolean;
+var
+  RegEx: TRegEx;
+begin
+  try
+    RegEx := TRegEx.Create('^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$');
+    Result := RegEx.IsMatch(AEmail);
+  finally
+
+  end;
+end;
+
 function TGravatar4D.EmailToMD5(const Value: string): string;
 var
   md5: TIdHashMessageDigest5;
@@ -179,12 +198,24 @@ end;
 function TGravatar4D.GravatarImage(const Email: string; const Size: Smallint; const GravatarRating: TGravatarRating;
   const GravatarDeafult: TGravatarDeafult; const URLDefaultImage: string): TPicture;
 begin
+  Result := nil;
 
   if Trim(Email) = '' then
-    raise EGravatar4dException.Create('The email was not provided.');
+    raise EGravatar4dException.Create('The email was not provided.', Email);
+
+  if not EmailIsValid(Trim(Email)) then
+    raise EGravatar4dException.Create('The email entered has an invalid format.', Email);
 
   Result := DownloadImage(GenerateUrl(Email, Size, GravatarRating, GravatarDeafult, URLDefaultImage));
 
+end;
+
+{ EGravatar4dException }
+
+constructor EGravatar4dException.Create(const Msg: string; const AEmail: string);
+begin
+  Inherited Create(Msg);
+  FEmail := AEmail;
 end;
 
 end.
