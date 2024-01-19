@@ -122,7 +122,7 @@ var
   RegEx: TRegEx;
 begin
   try
-    RegEx := TRegEx.Create('^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$');
+    RegEx := TRegEx.Create('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$');
     Result := RegEx.IsMatch(AEmail);
   finally
 
